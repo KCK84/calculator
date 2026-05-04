@@ -42,9 +42,9 @@ public class Calculator extends WindowAdapter implements ActionListener {
             b0.setBounds(120,410,50,50);
         bneg=new Button("+/-");
             bneg.setBounds(50,410,50,50);
-        bpts=new Button(".");
+        bpts=new Button(",");
             bpts.setBounds(190,410,50,50);
-        bback=new Button("Back");
+        bback=new Button("←");
             bback.setBounds(120,130,50,50);
         badd=new Button("+");
             badd.setBounds(260,340,50,50);
@@ -163,16 +163,20 @@ public class Calculator extends WindowAdapter implements ActionListener {
         //OPERATOR BUTTON
         if(e.getSource()==bpts){ //FOR DECIMAL POINT
             zt=l1.getText();
-            z=zt+".";
-            l1.setText(z);
+            int lastOp = Math.max(Math.max(zt.lastIndexOf('+'), zt.lastIndexOf('-')), Math.max(zt.lastIndexOf('*'), Math.max(zt.lastIndexOf('/'), zt.lastIndexOf('%'))));
+            String currentNumber = zt.substring(lastOp + 1);
+            if (!currentNumber.contains(",")) {
+                z = zt + ",";
+                l1.setText(z);
+            }
         }
 
         if(e.getSource()==bneg){ //FOR NEGATIVE
             zt=l1.getText();
-            if(zt.length()==0){
-                z="-";
+            if (zt.startsWith("-")) {
+                z = zt.substring(1);
             } else {
-                z="-"+zt;
+                z = "-" + zt;
             }
             l1.setText(z);
         }
@@ -187,57 +191,91 @@ public class Calculator extends WindowAdapter implements ActionListener {
         }
                         //ARITHMETIC BUTTON
         if(e.getSource()==badd){                     //FOR ADDITION
+            zt=l1.getText();
+            if (zt.length() > 0 && "+-*/%".indexOf(zt.charAt(zt.length()-1)) >= 0) {
+                z = zt + "+";
+                l1.setText(z);
+                return;
+            }
             try{
-                num1=Double.parseDouble(l1.getText());
+                num1=Double.parseDouble(zt.replace(',','.'));
             }catch(NumberFormatException f){
                 l1.setText("Invalid Format");
                 return;
             }
-            z=l1.getText()+"+";
+            z=zt+"+";
             l1.setText(z);
             check=1;
         }
         if(e.getSource()==bsub){                    //FOR SUBTRACTION
+            zt=l1.getText();
+            if (zt.length() == 0) {
+                l1.setText("-");
+                return;
+            }
+            if (zt.length() > 0 && "+-*/%".indexOf(zt.charAt(zt.length()-1)) >= 0) {
+                z = zt + "-";
+                l1.setText(z);
+                return;
+            }
             try{
-                num1=Double.parseDouble(l1.getText());
+                num1=Double.parseDouble(zt.replace(',','.'));
             }catch(NumberFormatException f){
                 l1.setText("Invalid Format");
                 return;
             }
-            z=l1.getText()+"-";
+            z=zt+"-";
             l1.setText(z);
             check=2;
         }
         if(e.getSource()==bmult){                   //FOR MULTIPLICATION
+            zt=l1.getText();
+            if (zt.length() > 0 && "+-*/%".indexOf(zt.charAt(zt.length()-1)) >= 0) {
+                z = zt + "*";
+                l1.setText(z);
+                return;
+            }
             try{
-                num1=Double.parseDouble(l1.getText());
+                num1=Double.parseDouble(zt.replace(',','.'));
             }catch(NumberFormatException f){
                 l1.setText("Invalid Format");
                 return;
             }
-            z=l1.getText()+"*";
+            z=zt+"*";
             l1.setText(z);
             check=3;
         }
         if(e.getSource()==bdiv){                    //FOR DIVISION
+            zt=l1.getText();
+            if (zt.length() > 0 && "+-*/%".indexOf(zt.charAt(zt.length()-1)) >= 0) {
+                z = zt + "/";
+                l1.setText(z);
+                return;
+            }
             try{
-                num1=Double.parseDouble(l1.getText());
+                num1=Double.parseDouble(zt.replace(',','.'));
             }catch(NumberFormatException f){
                 l1.setText("Invalid Format");
                 return;
             }
-            z=l1.getText()+"/";
+            z=zt+"/";
             l1.setText(z);
             check=4;
         }
         if(e.getSource()==bmod){                    //FOR MODULUS
+            zt=l1.getText();
+            if (zt.length() > 0 && "+-*/%".indexOf(zt.charAt(zt.length()-1)) >= 0) {
+                z = zt + "%";
+                l1.setText(z);
+                return;
+            }
             try{
-                num1=Double.parseDouble(l1.getText());
+                num1=Double.parseDouble(zt.replace(',','.'));
             }catch(NumberFormatException f){
                 l1.setText("Invalid Format");
                 return;
             }
-            z=l1.getText()+"%";
+            z=zt+"%";
             l1.setText(z);
             check=5;
         }
@@ -256,7 +294,7 @@ public class Calculator extends WindowAdapter implements ActionListener {
                 return;
             }
             try{
-                num2=Double.parseDouble(zt.substring(opPos+1));
+                num2=Double.parseDouble(zt.substring(opPos+1).replace(',','.'));
             }catch(Exception f){
                 l1.setText("ENTER NUMBER FIRST ");
                 return;
@@ -271,7 +309,7 @@ public class Calculator extends WindowAdapter implements ActionListener {
                 xd=num1/num2;
             if(check==5)
                 xd=num1%num2;
-            l1.setText(String.valueOf(xd));
+            l1.setText(String.valueOf(xd).replace('.', ','));
 
         }
                                //FOR CLEARING THE LABEL and Memory
