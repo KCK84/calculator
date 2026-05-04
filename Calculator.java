@@ -156,9 +156,19 @@ public class Calculator extends WindowAdapter implements ActionListener {
             l1.setText(z);
         }
         //OPERATOR BUTTON
+        if(e.getSource()==bpts){ //FOR DECIMAL POINT
+            zt=l1.getText();
+            z=zt+".";
+            l1.setText(z);
+        }
+
         if(e.getSource()==bneg){ //FOR NEGATIVE
             zt=l1.getText();
-            z="-"+zt;
+            if(zt.length()==0){
+                z="-";
+            } else {
+                z="-"+zt;
+            }
             l1.setText(z);
         }
         if(e.getSource()==bback){ //FOR BACKSPACE
@@ -170,69 +180,82 @@ public class Calculator extends WindowAdapter implements ActionListener {
             }
             l1.setText(z);
         }
-                        //AIRTHMETIC BUTTON
+                        //ARITHMETIC BUTTON
         if(e.getSource()==badd){                     //FOR ADDITION
             try{
                 num1=Double.parseDouble(l1.getText());
-                }catch(NumberFormatException f){
-                    l1.setText("Invalid Format");
-                    return;
-                }
-            z="";
+            }catch(NumberFormatException f){
+                l1.setText("Invalid Format");
+                return;
+            }
+            z=l1.getText()+"+";
             l1.setText(z);
             check=1;
         }
         if(e.getSource()==bsub){                    //FOR SUBTRACTION
-         try{
-            num1=Double.parseDouble(l1.getText());
-             }catch(NumberFormatException f){
+            try{
+                num1=Double.parseDouble(l1.getText());
+            }catch(NumberFormatException f){
                 l1.setText("Invalid Format");
                 return;
-                }
-            z="";
-             l1.setText(z);
-             check=2;
+            }
+            z=l1.getText()+"-";
+            l1.setText(z);
+            check=2;
         }
         if(e.getSource()==bmult){                   //FOR MULTIPLICATION
             try{
                 num1=Double.parseDouble(l1.getText());
-                }catch(NumberFormatException f){
-                    l1.setText("Invalid Format");
-                    return;
-                }
-            z="";
+            }catch(NumberFormatException f){
+                l1.setText("Invalid Format");
+                return;
+            }
+            z=l1.getText()+"*";
             l1.setText(z);
             check=3;
-        }           
+        }
         if(e.getSource()==bdiv){                    //FOR DIVISION
             try{
                 num1=Double.parseDouble(l1.getText());
-                }catch(NumberFormatException f){
-                    l1.setText("Invalid Format");
-                    return;
-                }
-            z="";
+            }catch(NumberFormatException f){
+                l1.setText("Invalid Format");
+                return;
+            }
+            z=l1.getText()+"/";
             l1.setText(z);
             check=4;
         }
         if(e.getSource()==bmod){                    //FOR MODULUS
             try{
                 num1=Double.parseDouble(l1.getText());
-                }catch(NumberFormatException f){
-                    l1.setText("Invalid Format");
-                    return;
-                }
-            z="";
+            }catch(NumberFormatException f){
+                l1.setText("Invalid Format");
+                return;
+            }
+            z=l1.getText()+"%";
             l1.setText(z);
             check=5;
         }
         if(e.getSource()==bcalc){                   //FOR CALCULATING THE RESULT
-            try{
-                num2=Double.parseDouble(l1.getText());
-                }catch(Exception f){
-                    l1.setText("ENTER NUMBER FIRST ");
-                    return;
+            zt=l1.getText();
+            int opPos=-1;
+            for(int i=1;i<zt.length();i++){
+                char c=zt.charAt(i);
+                if(c=='+'||c=='-'||c=='*'||c=='/'||c=='%'){
+                    opPos=i;
+                    break;
                 }
+            }
+            if(opPos==-1 || opPos==zt.length()-1){
+                l1.setText("ENTER NUMBER FIRST ");
+                return;
+            }
+            try{
+                num2=Double.parseDouble(zt.substring(opPos+1));
+            }catch(Exception f){
+                l1.setText("ENTER NUMBER FIRST ");
+                return;
+            }
             if(check==1)
                 xd=num1+num2;
             if(check==2)
