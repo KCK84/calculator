@@ -61,7 +61,7 @@ public class Calculator extends WindowAdapter implements ActionListener {
         bclr=new Button("C");
             bclr.setBounds(50,130,65,50);
 
-
+                                
         b1.addActionListener(this);
         b2.addActionListener(this);
         b3.addActionListener(this);
@@ -86,11 +86,12 @@ public class Calculator extends WindowAdapter implements ActionListener {
         bclr.addActionListener(this);
 
         f.addWindowListener(this);
+
         //ADDING TO FRAME
         f.add(l1);
-        f.add(b1); f.add(b2); f.add(b3); f.add(b4); f.add(b5); f.add(b6);
+        f.add(b1); f.add(b2); f.add(b3); f.add(b4); f.add(b5); f.add(b6); f.add(b7); f.add(b8); f.add(b9); f.add(b0);
 
-        f.add(badd);f.add(bsub);f.add(bmod);f.add(bmult);f.add(bdiv);f.add(bclr);f.add(bpts);f.add(bneg);f.add(bback);
+        f.add(badd);f.add(bsub);f.add(bmod);f.add(bmult);f.add(bdiv);f.add(bclr);f.add(bpts);f.add(bneg);f.add(bback); f.add(bcalc);
 
         f.setSize(360,500);
         f.setLayout(null);
