@@ -104,6 +104,11 @@ public class Calculator extends WindowAdapter implements ActionListener {
 
     public void actionPerformed(ActionEvent e){
         String z,zt;
+        zt = l1.getText();
+        if ("Invalid Format".equals(zt) || "ENTER NUMBER FIRST ".equals(zt)) {
+            zt = "";
+            l1.setText(zt);
+        }
                              //NUMBER BUTTON
         if(e.getSource()==b1){
             zt=l1.getText();
